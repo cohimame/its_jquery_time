@@ -1,0 +1,124 @@
+@(user: User, workers: Set[Worker])(implicit request: RequestHeader)
+
+    @main(user.login + "'s room") {
+    <body>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>IP</th>
+            <th>Port</th>
+            <th>filesystem</th>
+            <th>checkonce</th>
+            <th>periodical check</th>
+        </tr>
+      </thead>
+
+        <tbody>
+          @workers.map { worker =>
+              <div id="@(s"${worker.toString().replace(".","")}")">
+                <tr>
+                  <td>@worker.ip</td>
+                  <td>@worker.port</td>
+
+                  <td>
+                    <form class="files_form">
+                      <button id="bfiles_form">filesystem</button>
+                    </form>
+                  </td>
+
+                  <td>
+                    <form class="once_form">
+                      <button>initial check</button>
+                    </form>
+                  </td>
+
+                  <td>
+                    <form class="periodic_form">
+                      <input id="period" placeholder="period" />
+                      <button>periodical check</button>
+                    </form>
+                  </td>
+                </tr>
+              </div>
+          }
+      </tbody>
+
+    </table>
+
+      <a href="@routes.Application.nuevo" class="btn">
+        <button>add worker</button>
+    </a>
+
+    <script>
+      $(function() {
+        ws = new WebSocket("@routes.Application.roomSocket.webSocketURL()")
+
+        $('.files_form').submit(function(){
+
+            //var worker = "kokoko"//$('.files_form').val()
+            var worker = $('#bfiles_form' ).val()
+            alert(worker)
+            ws.send(worker)
+            return false;
+        })
+
+
+
+        /*
+        $('.files_form').submit(function(){
+          ws.send("filesystem")
+          return false;
+        })
+
+        $('.once_form').submit(function(){
+          ws.send("checkonce")
+          return false;
+        })
+
+        $('.periodic_form').submit(function(){
+          ws.send("checkperiodically")
+          return false;
+        })
+        */
+
+        ws.onmessage = function(msg) {
+          var worker_message = msg.data.split("__")  
+          var worker  = "#" + worker_message[0] + " .beat"
+          var message = worker_message[1]
+          $(worker).html(message)
+        };
+
+    })
+    </script>
+
+  </body>
+
+}
+
+@*
+
+  <form id="chatform">
+    <input id="text" placeholder="Say something..." />
+    <button type="submit">Say</button>
+  </form>
+  <ul id="messages"></ul>
+
+  <script type="text/javascript">
+      $(function() {
+        ws = new WebSocket("@routes.Chat.chatSocket(nick).webSocketURL()")
+        ws.onmessage = function(msg) {
+          $('<li />').text(msg.data).appendTo('#messages')
+        }
+
+      $('#chatform').submit(function(){
+        ws.send($('#text').val())
+        $('#text').val("").focus()
+      return false;
+      })
+  })
+  </script>
+  }
+
+*@

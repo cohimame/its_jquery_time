@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Result</title>
+        <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+        <script type='text/javascript' src='script.js'></script>
+    </head>
+    <body>
+    
+        <form class="files_form">
+            <text>worker.ip</text>
+            <button class="btn">ip</button> 
+        </form>
+
+        <form class="files_form">
+          <text>worker.port</text>
+          <button class="btn">port</button> 
+        </form>
+    
+        <script >
+        $(document).ready(
+            function(){
+                //var b = $('.files_form .btn')
+                var b = $('.files_form')
+                b.each(function(){
+                    var e = $(this).children('.btn')          
+                    alert(e.text())
+                //alert($(this).$('.btn').text())
+                })
+                //alert(b.length) 
+            }
+        )
+        </script>       
+     
+    </body>
+
+
+
+
+</html>
+
+
+
+
+
