@@ -5,14 +5,18 @@
     productListUrl = $table.data('list');
 
 
-    var tablet = $('.experiment .brand');
-    var tabletUrl = tablet.attr('href');
+    var fslink = $('.experiment .brand').attr('href');
+    var fstable = $('.fstable');
 
     loadFs = function() {
-      return $.get(tabletUrl, function(){
+      return $.get(fslink, function(agentJson){
+          var row = $('<tr/>').append($('<td/>').text(agentJson.agentAddress));
 
+          fstable.append(row)
       })
     }
+
+    loadFs()
 
     loadProductTable = function() {
       return $.get(productListUrl, function(products) {

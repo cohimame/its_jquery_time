@@ -34,7 +34,8 @@ object Products extends Controller {
   def fschain = Action {
     val jsonInts = Json.toJson(List(1,2,3))
     val jsonChars = Json.toJson(List("a","b","c"))
-    val composed = Json.obj("ints" -> jsonInts, "chars" -> jsonChars)
+    val composed = Json.obj("ints"  -> jsonInts,
+                            "chars" -> jsonChars)
     Ok(composed)
   }
 
