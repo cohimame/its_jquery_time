@@ -9,6 +9,12 @@ import play.api.libs.functional.syntax._
 
 object Products extends Controller {
 
+  def checkbox = Action {
+    Ok(views.html.checkboxes())
+  }
+
+
+
   def list = Action {
     val productCodes = Product.findAll.map(_.ean)
     Ok(Json.toJson(productCodes)/*(implicit tjs: Writes[List])*/)
