@@ -4,7 +4,6 @@ import play.api.mvc._
 import play.api.libs.json._
 import play.Logger
 
-
 object AgentComponents extends Controller {
 
   def checkbox = Action {
